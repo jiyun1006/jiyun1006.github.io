@@ -11,7 +11,7 @@ urls:
       url: /
     - text: About
       url: /about
-    - text: Blog
+    - text: Posts
       url: /blog
 #     - text: Gallery
 #       url: /gallery
