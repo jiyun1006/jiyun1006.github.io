@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Demension Reduction
+title:  ML_guide/Demension Reduction
 summary: "차원 축소 기법 (PCA, LDA, SGD...)"
 author: jiyun
 date: '2020-09-10 14:35:23 +0530'
