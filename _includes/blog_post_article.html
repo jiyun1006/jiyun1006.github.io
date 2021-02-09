@@ -31,12 +31,13 @@
       class="card-img-top"
       src="{{site.url}}{{site.baseurl}}{{ page.thumbnail }}"
       alt="{{ post.title }}"
+      width = "50%"
     />
     <br />
     <br />
     {{ content }}
     <br />
-    {%- include share_page.html -%}
+<!--     {%- include share_page.html -%} -->
     <!-- Author box -->
     {% assign author = site.data.authors[page.author] %}
       {% if author %}
