@@ -7,7 +7,7 @@ date: '2020-09-10 14:35:23 +0530'
 category: ML_guide
 thumbnail: /assets/img/posts/ml_guide.jpg
 keywords: scikit learn, python, pca, sgd
-permalink: /blog/ml_guide-demension_reduction/
+permalink: /blog/ML_guide/demension_reduction/
 usemathjax: true
 ---
 
