@@ -40,7 +40,7 @@ author_work_experiences:
               company_logo: bt.jpg
               company_url: https://boostcamp.connect.or.kr/
               designation: AI Engineering 
-              description: Study on various AI TECH(NLP, CV ....)
+              description: Study on various AI TECH (Natural language precessing, Computer vision...)
               visibility: true
 #             - company_name: Microsoft
 #               company_logo: microsoft.png
