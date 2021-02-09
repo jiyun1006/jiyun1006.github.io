@@ -36,40 +36,40 @@ typewrite-text: 안녕하세요 개발자 김지윤의 개발자 블로그 입�
 
 # Experiences
 author_work_experiences:
-            - company_name: Google
-              company_logo: google.png
-              company_url: https://google.com
-              designation: Software Engineer
-              description: Worked on various Google Products
+            - company_name: Boost camp
+              company_logo: bc.png
+              company_url: https://boostcamp.connect.or.kr/
+              designation: AI Engineering 
+              description: Study on various AI TECH(NLP, CV ....)
               visibility: true
-            - company_name: Microsoft
-              company_logo: microsoft.png
-              company_url: https://microsoft.com
-              designation: Azure Developer
-              description: Worked on various Azure Cloud Products
-              visibility: true
+#             - company_name: Microsoft
+#               company_logo: microsoft.png
+#               company_url: https://microsoft.com
+#               designation: Azure Developer
+#               description: Worked on various Azure Cloud Products
+#               visibility: true
 
 # Education
 author_education_details:
-              - college_logo: mit.png
-                college_name: MIT
-                college_url: https://mit.org
-                college_degree: CS Engineer
-                description: Bachelor of Technology
+              - college_logo: cau.png
+                college_name: CAU
+                college_url: https://mportal.cau.ac.kr/main.do
+                college_degree: Statistics
+#                 description: Bachelor of Technology
                 visibility: true
 
 # Projects
 author_project_details:
-              - project_thumbnail: gamershub.png
-                project_title: Gamers Hub
-                project_description: A Platform built for Gamers and Game Devs
-                project_url: https://gamershub.in
-                visibility: true
-              - project_thumbnail: hack4r.PNG
-                project_title: Hack4r
-                project_description: A Platform built for Hackers and Penetration Testers
-                project_url: https://hack4r.com
-                visibility: true
+#               - project_thumbnail: gamershub.png
+#                 project_title: Gamers Hub
+#                 project_description: A Platform built for Gamers and Game Devs
+#                 project_url: https://gamershub.in
+#                 visibility: true
+#               - project_thumbnail: hack4r.PNG
+#                 project_title: Hack4r
+#                 project_description: A Platform built for Hackers and Penetration Testers
+#                 project_url: https://hack4r.com
+#                 visibility: true
 
 # social links
 # twitter_username: johndoe
