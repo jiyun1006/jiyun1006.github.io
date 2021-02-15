@@ -64,6 +64,11 @@ $$
 
 
 $$
+P(d|c)P(c) = P(w_1, w_2, ... , w_n | c)P(c) \rightarrow  P(c)\prod_{w_i\in W}P(w_i|c) 
+$$   
+
+
+$$
 J(\theta) = \frac{1}{2} \sum_{i,j = 1}^{W} f(P_i_j)(u_i^{T}v_j - logP_i_j)^{2} 
 $$      
 
