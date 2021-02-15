@@ -48,7 +48,8 @@ $$
 <br>
 
 
-<img src="https://user-images.githubusercontent.com/52434993/107899780-a0415580-6f82-11eb-81ec-f6020a2cf733.jpg">
+<img src="https://user-images.githubusercontent.com/52434993/107907603-75adc780-6f97-11eb-93bd-26bb54f717a3.jpg">
+
 
 *Word2Vec과정을 시각화해서 볼 수 있는 곳*   <a href="http://ronxin.github.io/wevi/">[클릭]</a>
 
