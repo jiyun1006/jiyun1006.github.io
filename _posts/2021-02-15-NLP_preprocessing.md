@@ -50,7 +50,7 @@ $$
 
 <img src="https://user-images.githubusercontent.com/52434993/107899780-a0415580-6f82-11eb-81ec-f6020a2cf733.jpg" width=80%>
 
-*Word2Vec과정을 시각화해서 볼 수 있는 곳 http://ronxin.github.io/wevi/*   
+*Word2Vec과정을 시각화해서 볼 수 있는 곳*   <a href="http://ronxin.github.io/wevi/">[클릭]</a>
 
 <br><br>
 
