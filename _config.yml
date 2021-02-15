@@ -101,6 +101,11 @@ github_username:  jiyun1006
 markdown: kramdown
 highlighter: rouge
 permalink: pretty
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
 
 # Choose what to show ( can be true or false)
 show_author_work_experiences: true
