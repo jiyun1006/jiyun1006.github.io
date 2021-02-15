@@ -20,11 +20,6 @@ usemathjax: true
 * **여러 변수 간에 상관관계를 이용해 주성분을 추출하여 차원을 축소한다.**     
 
 
-$$   
-\sum  
-$$
-
-
 <br>
 
 <img src ="https://user-images.githubusercontent.com/52434993/91048814-2c6b6380-e657-11ea-9788-49743b6f5dd7.jpg" width = "60%">   
