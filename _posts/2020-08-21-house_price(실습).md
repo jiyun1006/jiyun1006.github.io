@@ -1,13 +1,15 @@
 ---
-
 layout: post
-title : house_price 실습
-comments : true
-categories : [Github Blog]
-tags : [Github Blog]
-
+title:  ML_guide/house_price
+summary: "ridge lasso 실습"
+author: jiyun
+date: '2020-10-01 14:35:23 +0530'
+category: ML_guide
+thumbnail: /assets/img/posts/ml_guide.jpg
+keywords: scikit learn, python, ridge, lasso
+permalink: /blog/house_price/
+usemathjax: true
 ---
-
 
 ## House_Price - Regression   
 
