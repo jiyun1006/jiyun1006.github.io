@@ -1,13 +1,15 @@
 ---
-
 layout: post
-title : 분류 - 결정트리
-comments : true
-categories : [Github Blog]
-tags : [Github Blog]
-
+title:  ML_guide/DecisionTree
+summary: "DecisionTree"
+author: jiyun
+date: '2020-09-20 14:35:23 +0530'
+category: ML_guide
+thumbnail: /assets/img/posts/ml_guide.jpg
+keywords: scikit learn, python, classification
+permalink: /blog/decisiontree/
+usemathjax: true
 ---
-
 
 ## 분류 - 결정 트리
 
