@@ -66,6 +66,7 @@ $$
 $$ J(\theta) = \frac{1}{2} \sum_{i,j = 1}^{W} f(P_i_j)(u_i^{T}v_j - logP_i_j)^{2} $$      
 
 
+<img src="https://user-images.githubusercontent.com/52434993/107916298-70f20f00-6fa9-11eb-8fa9-4466b535d293.gif">
 
 
 
