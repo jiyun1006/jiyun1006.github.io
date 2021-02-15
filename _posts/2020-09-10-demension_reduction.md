@@ -8,7 +8,7 @@ category: ML_guide
 thumbnail: /assets/img/posts/ml_guide.jpg
 keywords: scikit learn, python, pca, sgd
 permalink: /blog/demension_reduction/
-usemathjax: true
+use_mathjax: true
 ---
 
 
@@ -17,7 +17,11 @@ usemathjax: true
 > ## PCA(Principal Component Analysis)   
 
 * 가장 대표적인 차원 축소 기범.   
-* **여러 변수 간에 상관관계를 이용해 주성분을 추출하여 차원을 축소한다.**   
+* **여러 변수 간에 상관관계를 이용해 주성분을 추출하여 차원을 축소한다.**     
+
+
+\sum 
+
 
 <br>
 
