@@ -1,11 +1,14 @@
 ---
-
 layout: post
-title : 평가지표
-comments : true
-categories : [Github Blog]
-tags : [Github Blog]
-
+title:  ML_guide/Evaluation
+summary: "Evaluation"
+author: jiyun
+date: '2020-09-19 14:35:23 +0530'
+category: ML_guide
+thumbnail: /assets/img/posts/ml_guide.jpg
+keywords: scikit learn, python
+permalink: /blog/evaluation/
+usemathjax: true
 ---
 
 
