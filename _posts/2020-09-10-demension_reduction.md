@@ -8,7 +8,7 @@ category: ML_guide
 thumbnail: /assets/img/posts/ml_guide.jpg
 keywords: scikit learn, python, pca, sgd
 permalink: /blog/demension_reduction/
-use_mathjax: true
+usemathjax: true
 ---
 
 
@@ -20,7 +20,7 @@ use_mathjax: true
 * **여러 변수 간에 상관관계를 이용해 주성분을 추출하여 차원을 축소한다.**     
 
 
-\sum 
+\sum  
 
 
 <br>
