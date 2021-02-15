@@ -63,7 +63,7 @@ $$
 *중복되는 단어에 대해 더 잘 대응할 수 있다.*   
 
 
-$$J(\theta) = \frac{1}{2}\sum_{i,j = 1}^{W}f(P_i_j) ({u_i}^{T}v_j - \log{P_i_j})^{2}$$   
+$$ J(\theta) = \frac{1}{2}\sum_{i,j = 1}^{W}f(P_{ij})(u_{i}^{T}v_{j} - \log{P_{ij}})^{2} $$   
 
 
 
