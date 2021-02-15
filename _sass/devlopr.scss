@@ -114,6 +114,7 @@ ol, ul {
     background: #f69801;
 }
 
+
 body {
     background-color: var(--main-background-color) !important;
     color: var(--main-text-color) !important;
@@ -783,6 +784,11 @@ header {
     #mc-embedded-subscribe_footer {
         margin-top: 30px;
     }
+
+.card-img-top{
+	width = 480px;
+	height = 480px;
+}
 
 footer {
     width: 100%;
