@@ -52,7 +52,7 @@ $$
 
 *Word2Vec과정을 시각화해서 볼 수 있는 곳 http://ronxin.github.io/wevi/*   
 
-<br>
+<br><br>
 
 >### GloVe   
 >#### 입/출력 단어 쌍을 학습데이터가 한 윈도우내에서 몇 번 등장했는지 사전에 계산   
