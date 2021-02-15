@@ -26,6 +26,10 @@ usemathjax: true
 
 <br>
 
+- Naive bayes classification 역시 각 단어가 독립이라 가정하기 때문에, 본질적으로 Bag-of-words와 같다.(순서 무시, 빈도만 생각)      
+
+<br>
+
 *특정 카테고리 c가 고정되었을 때, 문서 d가 나타날 확률*   
 
 
