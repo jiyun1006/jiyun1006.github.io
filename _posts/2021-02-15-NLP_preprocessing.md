@@ -64,7 +64,7 @@ $$
 
 
 $$
-J(\theta) = \frac{1}{2}\sum_{i,j = 1}^{W}f(P_i_j)(u_i^{T}v_j - \log{P_i_j})^{2}  
+J(\theta) = \frac{1}{2}\sum_{i,j = 1}^{W}f(P_i_j)(u_i^{T}v_j - \log{P_i_j})^{2}
 $$   
 
 
