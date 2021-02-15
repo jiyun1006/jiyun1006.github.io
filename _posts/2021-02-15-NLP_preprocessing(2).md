@@ -3,7 +3,7 @@ layout: post
 title:  NLP/NLP Preprocessing(2)
 summary: "NLP Preprocessing - Word2Vec"
 author: jiyun
-date: '2021-02-15 14:35:23 +0530'
+date: '2021-02-15 15:35:23 +0530'
 category: NLP
 thumbnail: /assets/img/posts/nlp.png
 keywords: pytorch, AI, Word2Vec, Glove   
