@@ -1,13 +1,15 @@
 ---
-
 layout: post
-title : 신용카드 사기 검출 실습
-comments : true
-categories : [Github Blog]
-tags : [Github Blog]
-
+title:  ML_guide/creditcardfraud
+summary: "오버샘플링 -이상 분포 변화"
+author: jiyun
+date: '2020-10-12 14:35:23 +0530'
+category: ML_guide
+thumbnail: /assets/img/posts/ml_guide.jpg
+keywords: scikit learn, python, SMOTE
+permalink: /blog/creditcardfraud/
+usemathjax: true
 ---
-
 
 ## Ensemble - 신용카드 사기 검출(Kaggle)   
 
