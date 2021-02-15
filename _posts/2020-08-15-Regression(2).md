@@ -1,11 +1,14 @@
 ---
-
 layout: post
-title : Regression
-comments : true
-categories : [Github Blog]
-tags : [Github Blog]
-
+title:  ML_guide/Regression(2)
+summary: "회귀 분석(2)"
+author: jiyun
+date: '2020-10-04 14:35:23 +0530'
+category: ML_guide
+thumbnail: /assets/img/posts/ml_guide.jpg
+keywords: scikit learn, python, regression
+permalink: /blog/regression(2)/
+usemathjax: true
 ---
 
 
