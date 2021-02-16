@@ -227,9 +227,10 @@ class CBOW(nn.Module):
   # B: batch size, W: window size, d_w: word embedding size, V: vocab size
   def forward(self, x):  # x: (B, 2W)
     embeddings = self.embedding(x)  # (B, 2W, d_w)
-    embeddings = torch.sum(embeddings, dim=1)  # (B, d_w) 왜 평균을 안 구하는지
+    embeddings = torch.sum(embeddings, dim=1)  # (B, d_w)
     output = self.linear(embeddings)  # (B, V)
     return output
+
 
 
 
