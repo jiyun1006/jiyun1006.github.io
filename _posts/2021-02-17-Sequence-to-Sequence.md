@@ -467,6 +467,9 @@ class Seq2seq(nn.Module):
 seq2seq = Seq2seq(encoder, decoder)
 ```
 
+<br><br>
+
+
 > ## Bahdanau Attention   
 > #### 해당 시점의 decode hidden vector와 전체 encode hidden vector를 내적하는 것이 아니다.   
 > #### concat을 통해서 특정 layer를 통해 score를 계산하는 방식    
