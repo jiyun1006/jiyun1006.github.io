@@ -472,20 +472,81 @@ seq2seq = Seq2seq(encoder, decoder)
 > #### concat을 통해서 특정 layer를 통해 score를 계산하는 방식    
 
 
-`$$s_{t-1}와 모든 h_1 , ... , h_{T_z}사이의 연관성을 가중치로 보고, 이 가중치의 합을 구해서 context vector를 구한다. $$`
+$$s_{t-1}와 모든 h_1 , ... , h_{T_z}사이의 연관성을 가중치로 보고, 이 가중치의 합을 구해서 context vector를 구한다. $$
+
+<br>
 
 $$
-\{Context_vector} : c_t = \sum_{j=1}^{T_z}a_{tj}h_j = Ha_t
+{Context_vector} : c_t = \sum_{j=1}^{T_z}a_{tj}h_j = Ha_t
 $$
 
 $$
-\Attention_score : a_t = Softmax((Score(s_{t-1}, h_j))_{j=1}^{T_z}) \in \mathbb{R}^T_z
+Attention_score : a_t = Softmax((Score(s_{t-1}, h_j))_{j=1}^{T_z}) \in \mathbb{R}^T_z
 $$
 
 $$
 {Similarity(유사도)} : Score(s_{t-1}, h_j) =  \upsilon^Ttanh(W_as_{t-1} + U_aH_j)
 $$
 
+<br>
+
+- ### Encoder 구현   
+
+```python
+class ConcatAttention(nn.Module):
+  def __init__(self):
+    super().__init__()
+
+    self.w = nn.Linear(2*hidden_size, hidden_size, bias=False)
+    self.v = nn.Linear(hidden_size, 1, bias=False)
+
+  def forward(self, decoder_hidden, encoder_outputs):  # (1, B, d_h), (S_L, B, d_h)
+    src_max_len = encoder_outputs.shape[0]
+
+    decoder_hidden = decoder_hidden.transpose(0, 1).repeat(1, src_max_len, 1)  # (B, S_L, d_h)
+    encoder_outputs = encoder_outputs.transpose(0, 1)  # (B, S_L, d_h)
+
+    concat_hiddens = torch.cat((decoder_hidden, encoder_outputs), dim=2)  # (B, S_L, 2d_h)
+    energy = torch.tanh(self.w(concat_hiddens))  # (B, S_L, d_h)
+
+    attn_scores = F.softmax(self.v(energy), dim=1)  # (B, S_L, 1)
+    attn_values = torch.sum(torch.mul(encoder_outputs, attn_scores), dim=1)  # (B, d_h)
+
+    return attn_values, attn_scores
+```   
+
+<br>
+
+- ### Decoder 구현   
+  - embedding 과 attention을 수행해서 attention value를 embedding과 concat을 하여, input_size가 embedding_size + hidden_size가 된다.   
+
+
+```python
+class Decoder(nn.Module):
+  def __init__(self, attention):
+    super().__init__()
+
+    self.embedding = nn.Embedding(vocab_size, embedding_size)
+    self.attention = attention
+    self.rnn = nn.GRU(
+        embedding_size + hidden_size,
+        hidden_size
+    )
+    self.output_linear = nn.Linear(hidden_size, vocab_size)
+
+  def forward(self, batch, encoder_outputs, hidden):  # batch: (B), encoder_outputs: (S_L, B, d_h), hidden: (1, B, d_h)  
+    batch_emb = self.embedding(batch)  # (B, d_w)
+    batch_emb = batch_emb.unsqueeze(0)  # (1, B, d_w)
+
+    attn_values, attn_scores = self.attention(hidden, encoder_outputs)  # (B, d_h), (B, S_L)
+
+    concat_emb = torch.cat((batch_emb, attn_values.unsqueeze(0)), dim=-1)  # (1, B, d_w+d_h)
+
+    outputs, hidden = self.rnn(concat_emb, hidden)  # (1, B, d_h), (1, B, d_h)
+
+    return self.output_linear(outputs).squeeze(0), hidden  # (B, V), (1, B, d_h)
+
+```
 
 
 
