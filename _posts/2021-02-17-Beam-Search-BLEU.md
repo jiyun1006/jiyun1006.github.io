@@ -55,7 +55,10 @@ $$
 <br><br>
 
 
->## BLUE score   
+>## BLEU score   
+
+
+`일반적인 평가 지표`   
 
 
 $$
@@ -73,7 +76,16 @@ $$
 
 <br>
 
-`순서에 대한 검증은 하지 못하기 때문에 해당 평가 방법이 아닌 BLUE score를 이용한다.`   
+`순서에 대한 검증은 하지 못하기 때문에 해당 평가 방법이 아닌 BLUE score를 이용한다.`    
+
+`BLEU에서는 precision만 고려한다.`  
+
+`N-gram에 대한 기하평균`   
+
+
+$$
+BLEU = min(1, \frac{length\_of\_prediction}{length\_of\_reference})(\prod_{i=1}^{4}precision_i)^{\frac{1}{4}}
+$$
 
 
 
