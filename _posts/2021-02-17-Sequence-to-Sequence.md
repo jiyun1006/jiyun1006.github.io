@@ -475,20 +475,20 @@ seq2seq = Seq2seq(encoder, decoder)
 > #### concat을 통해서 특정 layer를 통해 score를 계산하는 방식    
 
 
-$$s_{t-1}와 모든 h_1 , ... , h_{T_z}사이의 연관성을 가중치로 보고, 이 가중치의 합을 구해서 context vector를 구한다. $$
+$$s_{t-1}와 모든 h_1 , ... , h_{T_z}사이의 연관성을 가중치로 보고, 이 가중치의 합을 구해서 Context \, vector를 구한다. $$
 
 <br>
 
 $$
-{Context_vector} : c_t = \sum_{j=1}^{T_z}a_{tj}h_j = Ha_t
+Context\,vector : c_t = \sum_{j=1}^{T_z}a_{tj}h_j = Ha_t
 $$
 
 $$
-Attention_score : a_t = Softmax((Score(s_{t-1}, h_j))_{j=1}^{T_z}) \in \mathbb{R}^T_z
+Attention\,score : a_t = Softmax((Score(s_{t-1}, h_j))_{j=1}^{T_z}) \in \mathbb{R}^T_z
 $$
 
 $$
-{Similarity(유사도)} : Score(s_{t-1}, h_j) =  \upsilon^Ttanh(W_as_{t-1} + U_aH_j)
+Similarity(유사도) : Score(s_{t-1}, h_j) =  \upsilon^Ttanh(W_as_{t-1} + U_aH_j)
 $$
 
 <br>
