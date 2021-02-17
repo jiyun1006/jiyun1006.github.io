@@ -136,7 +136,7 @@ trg_batch_lens = trg_batch_lens[sorted_idx]
 
 <br>
 
-- ### Encode 구현   
+- ### Encoder 구현   
 
 *파라미터 설정*   
 
