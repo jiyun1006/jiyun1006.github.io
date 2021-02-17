@@ -312,6 +312,179 @@ preds = outputs[:-1, :, :].transpose(0, 1)  # (B, T_L-1, V)
 loss = loss_function(preds.contiguous().view(-1, vocab_size), trg_batch[:,1:].contiguous().view(-1, 1).squeeze(1))
 ```   
 
+<br><br>
+
+
+>## Seq2Seq Attention 실습   
+
+<br>
+
+`위에서 진행했던 데이터전처리(데이터, packedSequence)는 모두 동일하다.`   
+
+`Encoder를 구현하는 부분부터 차이점이 생긴다.`   
+
+- ### Encoder 구현   
+
+`hidden state vector뿐만 아니라, 기존의 output도 linear를 적용한다.`   
+
+```python
+class Encoder(nn.Module):
+  def __init__(self):
+    super(Encoder, self).__init__()
+
+    self.embedding = nn.Embedding(vocab_size, embedding_size)
+    self.gru = nn.GRU(
+        input_size=embedding_size, 
+        hidden_size=hidden_size,
+        num_layers=num_layers,
+        bidirectional=True if num_dirs > 1 else False,
+        dropout=dropout
+    )
+    self.linear = nn.Linear(num_dirs * hidden_size, hidden_size)
+
+  def forward(self, batch, batch_lens):  # batch: (B, S_L), batch_lens: (B)
+    # d_w: word embedding size
+    batch_emb = self.embedding(batch)  # (B, S_L, d_w)
+    batch_emb = batch_emb.transpose(0, 1)  # (S_L, B, d_w)
+
+    packed_input = pack_padded_sequence(batch_emb, batch_lens)
+
+    h_0 = torch.zeros((num_layers * num_dirs, batch.shape[0], hidden_size))  # (num_layers*num_dirs, B, d_h) = (4, B, d_h)
+    packed_outputs, h_n = self.gru(packed_input, h_0)  # h_n: (4, B, d_h)
+    outputs = pad_packed_sequence(packed_outputs)[0]  # outputs: (S_L, B, 2d_h)
+    # 차원을 줄이고, non linear 인 tanh를 거친다.
+    outputs = torch.tanh(self.linear(outputs))  # (S_L, B, d_h)
+
+    forward_hidden = h_n[-2, :, :]
+    backward_hidden = h_n[-1, :, :]
+    hidden = torch.tanh(self.linear(torch.cat((forward_hidden, backward_hidden), dim=-1))).unsqueeze(0)  # (1, B, d_h)
+
+    return outputs, hidden
+    
+encoder = Encoder()
+```   
+
+<br>
+
+- ### Dot-product Attention 구현   
+
+`decoder hidden state와 encoder hidden state간의 내적을 구해 유사도를 구한 다음, 해당 유사도를 소프트맥스 함수를 적용한다.`   
+
+`그 후, 가중치를 구해서 encoder hidden state 가중합하여 Attention value를 끌어낸다.`   
+
+```python
+class DotAttention(nn.Module):
+  def __init__(self):
+    super().__init__()
+
+  def forward(self, decoder_hidden, encoder_outputs):  # (1, B, d_h), (S_L, B, d_h)
+    query = decoder_hidden.squeeze(0)  # (B, d_h)
+    key = encoder_outputs.transpose(0, 1)  # (B, S_L, d_h)
+
+    # 내적 --> 유사도 (key와 query)
+    # 각 encoder hidden state의 길이만큼 반복적으로 각 차원을 곱하고, 더한다.
+    energy = torch.sum(torch.mul(key, query.unsqueeze(1)), dim=-1)  # (B, S_L)
+
+    # 내적(유사도)를 소프트맥스 함수에 적용한다.
+    attn_scores = F.softmax(energy, dim=-1)  # (B, S_L)
+    
+    # 그 후에 가중치를 구한다.
+    # 각 encoder hidden state에 적용되는 가중치로 나타내기 위해 해당 연산을 한다.
+    attn_values = torch.sum(torch.mul(encoder_outputs.transpose(0, 1), attn_scores.unsqueeze(2)), dim=1)  # (B, d_h)
+
+    return attn_values, attn_scores
+    
+dot_attn = DotAttention()
+```   
+
+<br>
+
+
+- ### Decoder 구현
+  - 기본적인 seq2seq의 decoder에다가 Attention 을 추가.       
+
+
+```python
+class Decoder(nn.Module):
+  def __init__(self, attention):
+    super().__init__()
+
+    self.embedding = nn.Embedding(vocab_size, embedding_size)
+    self.attention = attention
+    self.rnn = nn.GRU(
+        embedding_size,
+        hidden_size
+    )
+    self.output_linear = nn.Linear(2*hidden_size, vocab_size)
+
+  def forward(self, batch, encoder_outputs, hidden):  # batch: (B), encoder_outputs: (L, B, d_h), hidden: (1, B, d_h)  
+    batch_emb = self.embedding(batch)  # (B, d_w)
+    batch_emb = batch_emb.unsqueeze(0)  # (1, B, d_w)
+
+    outputs, hidden = self.rnn(batch_emb, hidden)  # (1, B, d_h), (1, B, d_h)
+
+    attn_values, attn_scores = self.attention(hidden, encoder_outputs)  # (B, d_h), (B, S_L)
+    concat_outputs = torch.cat((outputs, attn_values.unsqueeze(0)), dim=-1)  # (1, B, 2d_h)
+
+    return self.output_linear(concat_outputs).squeeze(0), hidden  # (B, V), (1, B, d_h)
+    
+decoder = Decoder(dot_attn)
+```   
+
+<br>
+
+- ### Seq2Seq 모델 구현   
+  - decoder에 attention을 넣은 모델   
+
+
+```python
+class Seq2seq(nn.Module):
+  def __init__(self, encoder, decoder):
+    super(Seq2seq, self).__init__()
+
+    self.encoder = encoder
+    self.decoder = decoder
+
+  def forward(self, src_batch, src_batch_lens, trg_batch, teacher_forcing_prob=0.5):
+    # src_batch: (B, S_L), src_batch_lens: (B), trg_batch: (B, T_L)
+
+    encoder_outputs, hidden = self.encoder(src_batch, src_batch_lens)  # encoder_outputs: (S_L, B, d_h), hidden: (1, B, d_h)
+
+    input_ids = trg_batch[:, 0]  # (B)
+    batch_size = src_batch.shape[0]
+    outputs = torch.zeros(trg_max_len, batch_size, vocab_size)  # (T_L, B, V)
+
+    for t in range(1, trg_max_len):
+      decoder_outputs, hidden = self.decoder(input_ids, encoder_outputs, hidden)  # decoder_outputs: (B, V), hidden: (1, B, d_h)
+
+      outputs[t] = decoder_outputs
+      _, top_ids = torch.max(decoder_outputs, dim=-1)  # top_ids: (B)
+
+      input_ids = trg_batch[:, t] if random.random() > teacher_forcing_prob else top_ids
+
+    return outputs
+    
+seq2seq = Seq2seq(encoder, decoder)
+```
+
+> ## Bahdanau Attention   
+> #### 해당 시점의 decode hidden vector와 전체 encode hidden vector를 내적하는 것이 아니다.   
+> #### concat을 통해서 특정 layer를 통해 score를 계산하는 방식    
+
+
+$$
+Context vector : c_t = \sum_{j=1}^{T_z}a_{tj}h_j = Ha_t
+$$
+
+$$
+a_t = Softmax((Score(s_{t-1}, h_j))_{j=1}^{T_z}) \in \mathbb{R}^T_z
+$$
+
+$$
+Score(s_{t-1}, h_j) =  \upsilon^Ttanh(W_as_{t-1} + U_aH_j)
+$$
+
+
 
 
 
