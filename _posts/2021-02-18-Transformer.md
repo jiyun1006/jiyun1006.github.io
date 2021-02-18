@@ -42,10 +42,11 @@ $$
 
 <br>
 
-*Output : weighted sum of values*   
+```
+Output : weighted sum of values   
 
-*Weight of each value : inner product (query, key)*   
-
+Weight of each value : inner product (query, key) 
+```
 
 $$
 A(q,K,V) = \sum_{i}\frac{\exp(q\,\cdot\,k_i)}{\sum_{j}\exp(q\,\cdot\,k_j)}v_i
@@ -62,7 +63,31 @@ i번째 키의 유사도(소프트맥스)\, :\, \frac{i번째 key\,vector와 que
 $$
 
 
-i번째 키값을 query  query와 key의 각각의 내적을 구한 후의 합  --> i번째 키값의 소프트맥스 후의 유사도 ---> 이것들의 합 * value
+<br>
+
+- ### Multi-Head Attention   
+
+`동일한 sequence에서 다른 측면에서 여러 정보가 필요할 때 사용`
+
+$$
+MultiHead(Q,\,K,\,V) = Concat(head_1,\,...\,,\,head_h)W^O 
+$$
+$$
+where \;\; head_i = Attention(QW_{i}^{Q},\,KW_{i}^{K},\,VW_{i}^{V}) 
+$$
+
+
+<br>
+
+
+`rnn과 달리 순서에 대한 특징을 가져오지 못하기 때문에(?) 각각의 문자의 순서를 구별하게 되는 순서 벡터를 encoding 벡터에 적용한다.`\
+`이러한 특징을 Positional Encoding 이라고 한다.`   
+
+
+
+
+
+
 
 
 
