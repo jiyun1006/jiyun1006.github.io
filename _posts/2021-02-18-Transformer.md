@@ -54,7 +54,7 @@ $$
 <br>
 
 $$
-\frac{\exp(q\,\cdot\,k_i)}{\sum_{j}\exp(q\,\cdot\,k_j)} \
+\frac{\exp(q\,\cdot\,k_i)}{\sum_{j}\exp(q\,\cdot\,k_j)}
 $$
 
 $$
