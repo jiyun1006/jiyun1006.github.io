@@ -225,7 +225,7 @@ class Decoder(nn.Module):
     batch_emb = self.embedding(batch)  # (B, d_w)
     batch_emb = batch_emb.unsqueeze(0)  # (1, B, d_w)
 
-    outputs, hidden = self.gru(batch_emb, hidden)  # outputs: (1, B, 2d_h), hidden: (1, B, d_h)
+    outputs, hidden = self.gru(batch_emb, hidden)  # outputs: (1, B, d_h), hidden: (1, B, d_h)
     
     # V: vocab size
     outputs = self.output_layer(outputs)  # (1, B, V)
