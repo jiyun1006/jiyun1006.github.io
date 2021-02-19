@@ -40,6 +40,7 @@ $$
 
 `따라서 모든 embedding vector를 이용해서 다른 정보도 활용을 하는 것이 가능하다.`    
 
+
 <br>
 
 ```
@@ -61,6 +62,42 @@ $$
 $$
 i번째 키의 유사도(소프트맥스)\, :\, \frac{i번째 key\,vector와 query의 곱}{각각의 key\,vector와 query의 곱의 합} 
 $$
+
+<br>
+
+- ### Scaled dot-product Attention   
+
+`Q(queries), K(keys), V(values)를 이용해서 가중평균을 구한다.`   
+
+`Q벡터와 K벡터에 대해서 attention score를 구하고, V벡터를 가중합하여 context vector를 구한다.`   
+
+
+$$
+score(q,\,k)\;=\; q\,\cdot\,k/ \sqrt{n} 
+$$
+
+<br>
+
+- #### "i am a student" 에 대한 scaled dot-product Attention 과정 예시
+
+<br>
+
+`"i" 에 대한 Q벡터 기준, score(q,k)의 과정을 보여준다.`   
+
+`이후 각각의 attention score에 활성함수를 적용하여 attention 분포를 구하고 각각의 V벡터와 가중합하여 attention value를 구한다.`\
+`이 attention value가 단어 "i"에 대한 context vector이다.`   
+
+
+<img src="https://user-images.githubusercontent.com/52434993/108466557-28976180-72c7-11eb-84c4-74cac32cc170.jpg" width="780px">
+
+
+*해당 연산을 각 단어에 대해 벡터연산으로 나누지 말고, 행렬 연산을 이용해서 일괄 계산을 한다.*   
+
+
+$$
+Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
+$$
+
 
 
 <br>
