@@ -83,6 +83,8 @@ $$
 `rnn과 달리 순서에 대한 특징을 가져오지 못하기 때문에(?) 각각의 문자의 순서를 구별하게 되는 순서 벡터를 encoding 벡터에 적용한다.`\
 `이러한 특징을 Positional Encoding 이라고 한다.`   
 
+<img src = "https://user-images.githubusercontent.com/52434993/108445426-bb240a80-729f-11eb-889a-0d50f8f35a5e.png" width="780px">   
+
 
 
 
