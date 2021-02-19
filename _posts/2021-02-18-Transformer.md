@@ -104,7 +104,9 @@ $$
 
 - ### Multi-Head Attention   
 
-`동일한 sequence에서 다른 측면에서 여러 정보가 필요할 때 사용`
+`동일한 sequence에서 다른 측면에서 여러 정보가 필요할 때 사용`   
+
+`여러 번의 attention을 병렬로 사용하는 방법 (head개의 병렬 attention 수행)`
 
 $$
 MultiHead(Q,\,K,\,V) = Concat(head_1,\,...\,,\,head_h)W^O 
@@ -123,6 +125,10 @@ $$
 <img src = "https://user-images.githubusercontent.com/52434993/108445426-bb240a80-729f-11eb-889a-0d50f8f35a5e.png" width="780px">   
 
 
+
+<br><br>
+
+>## Multihead attention 구현 실습   
 
 
 
