@@ -130,7 +130,126 @@ $$
 
 >## Multihead attention 구현 실습   
 
+<br>
 
+*import 및 데이터 전처리 과정 생략*    
+
+
+- ### Linear transformation & 여러 head로 나누기   
+
+`embedding 벡터를 linear transfor시켜줄 matrix 생성`   
+
+```python
+--- 각각 query, key, value를 위한 linear ---
+w_q = nn.Linear(d_model, d_model)
+w_k = nn.Linear(d_model, d_model)
+w_v = nn.Linear(d_model, d_model)
+
+
+--- 마지막 attention value를 최종적으로 합치기 위한 linear ---
+w_0 = nn.Linear(d_model, d_model)
+
+
+--- 선형변환 적용 ---
+q = w_q(batch_emb)  # (B, L, d_model)
+k = w_k(batch_emb)  # (B, L, d_model)
+v = w_v(batch_emb)  # (B, L, d_model)
+```     
+
+<br>
+
+`multihead attention 이기 때문에, num_head의 개수에 따라 차원을 분할시켜 여러 vector로 생성`   
+
+```python
+batch_size = q.shape[0]
+d_k = d_model // num_heads
+
+q = q.view(batch_size, -1, num_heads, d_k)  # (B, L, num_heads, d_k)
+k = k.view(batch_size, -1, num_heads, d_k)  # (B, L, num_heads, d_k)
+v = v.view(batch_size, -1, num_heads, d_k)  # (B, L, num_heads, d_k)
+
+
+--- 각 head가 L x d_k 개의 행렬을 가지게 되는 꼴로 만들어 준다. ---
+q = q.transpose(1, 2)  # (B, num_heads, L, d_k) 
+k = k.transpose(1, 2)  # (B, num_heads, L, d_k)
+v = v.transpose(1, 2)  # (B, num_heads, L, d_k)
+```   
+
+
+<br>
+
+- ### Scaled dot-product self-attention    
+
+
+`각 head에서 self-attention을 실행한다.`   
+
+```python
+attn_scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(d_k)  # (B, num_heads, L, L)
+attn_dists = F.softmax(attn_scores, dim=-1)  # (B, num_heads, L, L)  
+```   
+
+`구해진 attention 분포를 통해 가중합을 구한다.`   
+
+```python
+attn_values = torch.matmul(attn_dists, v)
+```
+
+
+`각각 head의 결과물들을 concat하고 linear-transformation과정을 거친다.`   
+
+`불연속적인 주소들을 연속적인 메모리 주소로 재설정하기 위해서 contiguous를 사용한다.`   
+
+
+```python
+attn_values = attn_values.transpose(1, 2)  # (B, L, num_heads, d_k)
+attn_values = attn_values.contiguous().view(batch_size, -1, d_model)  # (B, L, d_model)
+
+
+outputs = w_0(attn_values)
+```   
+
+
+<br><br>
+
+>## Masked Multihead attention 구현 실습    
+
+
+`위의 전처리과정과 동일`   
+
+- ### Masking 적용   
+
+`padding 처리된 벡터에 attention을 하는 것이 불필요한 과정이기 때문에, 이를 masking한다.`    
+
+
+```python
+--- pad_id 와 같은 곳에 False를 주는 tensor를 만든다. ---
+padding_mask = (batch != pad_id).unsqueeze(1)  # (B, 1, L)
+
+
+--- torch.tril를 이용해서 삼각형 모양의 Boolean 벡터를 만든다 (반은 True, 반은 False).
+nopeak_mask = torch.ones([1, max_len, max_len], dtype=torch.bool)  # (1, L, L)
+nopeak_mask = torch.tril(nopeak_mask)  # (1, L, L)
+
+
+--- padding_mask 와 nopeak_mask의 and연산을 통해 padding에 masking을 적용한다. ---
+mask = padding_mask & nopeak_mask  # (B, L, L)
+```
+
+<br>
+
+- ### Masking 적용된 self-attention   
+
+
+`masking된 곳에 매우 작은 수를 줌으로써 attention score를 계산하고 나서, softmax함수를 취했을 대, 0이 나오게 한다.`   
+
+
+```python
+masks = mask.unsqueeze(1)  # (B, 1, L, L)
+
+
+# masked_fill_ : False 라고 나온곳은 매우 작은 수를 준다.
+masked_attn_scores = attn_scores.masked_fill_(masks == False, -1 * inf)  # (B, num_heads, L, L)
+```
 
 
 
