@@ -88,5 +88,13 @@ $$
   
 $$ 
 r_j = \sum_{i \in N_{in}(j)} \,(\alpha \frac{r_i}{d_{out}(i)}) + (1-\alpha)\frac{1}{\left | V \right |} 
-$$
+$$   
+
+<br><br>
+
+
+
+
+
+
 
