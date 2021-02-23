@@ -4,7 +4,7 @@ title:  Springboot setting
 summary: "Springboot/gradle"
 author: jiyun
 date: '2021-01-15 15:35:23 +0530'
-category: AI
+category: springboot
 thumbnail: /assets/img/posts/springboot.png
 keywords: springboot, jpa  
 permalink: /blog/springboot-gradle/
