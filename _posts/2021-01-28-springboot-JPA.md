@@ -164,7 +164,7 @@ public class PostsRepositoryTest {
 
 <br>
 
-<img src="https://user-images.githubusercontent.com/52434993/107610831-e4cca880-6c85-11eb-85c4-40e1c3d0599d.png" width = 60%>    
+<img src="https://user-images.githubusercontent.com/52434993/107610831-e4cca880-6c85-11eb-85c4-40e1c3d0599d.png" width = "60%">    
 
 - Web Layer   
 `흔히 사용하는 컨트롤러, JSP 등의 뷰 템플릿 영역`   
