@@ -20,7 +20,7 @@ usemathjax: true
 - TDD
     - 레드 그린 사이클   
 
-        <img src ="https://user-images.githubusercontent.com/52434993/107529625-67118a00-6bfe-11eb-99d2-1b00acb3c368.gif"  width = 60%>
+        <img src ="https://user-images.githubusercontent.com/52434993/107529625-67118a00-6bfe-11eb-99d2-1b00acb3c368.gif"  width = "60%">
     
     - 항상 실패하고 테스트를 먼저 작성하고 (red)   
     
