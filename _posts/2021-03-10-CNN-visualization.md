@@ -110,11 +110,20 @@ $$
 
 - #### Grad-CAM   
   
-  - 기존 학습된 network를 재학습하거나 수정할 필요가 없다.    
+  - GAP가 없는 모델에도 사용이 가능하고, 기존 학습된 network를 재학습하거나 수정할 필요가 없다.
+  
   - 입력 영상까지 역전파를 하지 않고, 활성함수 전까지만 진행한다.   
 
     $$
     \alpha_{k}^{c} = \frac{1}{Z}\sum_i \sum_j\, \frac{\partial y^c}{\partial A_{ij}^k}
     $$
-
+    
+    $$
+    L_{Grad-CAM}^{c} = ReLU(\sum_{k} \alpha_{k}^{c}A^{k})
+    $$   
+    
+    
+    **guided Backprop과 Grad-CAM을 결합한 모델**   
+    
+    <img src="https://user-images.githubusercontent.com/52434993/110586007-d73b0d80-81b4-11eb-9384-b569d54c2d7c.jpg" width="780px">
 
